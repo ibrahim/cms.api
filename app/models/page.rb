@@ -8,4 +8,11 @@ class Page < ActiveRecord::Base
 	end
 	has_many  :photos, :through => :frames
 	belongs_to :photo
+	has_many  :taggings, as: :taggable, dependent: :destroy
+        has_many :tags , through: :taggings
+
+
+        def to_slug
+            slug ? slug : title.gsub(/\s/, "_")
+        end
 end

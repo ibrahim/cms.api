@@ -34,6 +34,7 @@ gem 'graphql'
 gem 'mysql2'
 gem 'awesome_nested_set', git: 'https://github.com/collectiveidea/awesome_nested_set.git'
 gem "graphiql-rails", group: :development
+gem 'rack-cors'
 
 gem 'globalize', git: 'https://github.com/globalize/globalize'
 gem 'activemodel-serializers-xml'
