@@ -7,6 +7,8 @@ class GraphqlController < ApplicationController
     context = {
       # Query context goes here, for example:
       # current_user: current_user,
+      current_site: current_site,
+      remote_ip: request.remote_ip
     }
     result = SunriseApiSchema.execute(query, variables: variables, context: context)
     render json: result

@@ -1,5 +1,7 @@
 SunriseApiSchema = GraphQL::Schema.define do
-  query(Types::QueryType)
+  query Types::QueryType
+  mutation Mutations::MutationType
+
   resolve_type ->(obj, ctx) do
       case obj.class.name
     when "Page"
@@ -10,6 +12,10 @@ SunriseApiSchema = GraphQL::Schema.define do
       Types::FrameType
     when "Site"
       Types::SiteType
+    when "Feedback"
+      Types::FeedbackType
+    when "Form"
+      Types::FormType
     else
       raise("Don't know how to get the GraphQL type of a #{obj.class.name} (#{obj.inspect})")
     end
