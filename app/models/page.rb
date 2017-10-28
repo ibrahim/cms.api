@@ -13,6 +13,9 @@ class Page < ActiveRecord::Base
 
 
         def to_slug
-            slug ? slug : title.gsub(/\s/, "_")
+            !slug.blank? ? slug : title.gsub(/\s/, "_").gsub("&","and")
+        end
+        def url_title
+            title.gsub(/\s/, "_").gsub("&","and")
         end
 end

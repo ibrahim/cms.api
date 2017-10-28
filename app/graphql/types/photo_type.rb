@@ -3,6 +3,9 @@ Types::PhotoType = GraphQL::ObjectType.define do
     description "the photo"
     interfaces [GraphQL::Relay::Node.interface]
     global_id_field :id
+    field :height, types.Int, "The height of this photo", property: :height
+    field :width, types.Int, "The height of this photo", property: :width
+
     field :title, types.String
     field :photo_uri, types.String do
         argument :size, types.String

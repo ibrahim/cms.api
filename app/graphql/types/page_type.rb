@@ -24,6 +24,11 @@ Types::PageType = GraphQL::ObjectType.define do
             page.to_slug
         }
     end
+    field :url_title, types.String do
+        resolve ->(page, args, ctx) {
+            page.url_title
+        }
+    end
     connection :frames, Types::FrameType.connection_type do
             argument :order, types.String
             argument :limit, types.Int
