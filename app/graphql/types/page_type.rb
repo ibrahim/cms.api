@@ -18,6 +18,12 @@ Types::PageType = GraphQL::ObjectType.define do
     field :room_vtour, types.String
     field :room_video, types.String
     field :room_booking_url, types.String
+    field :dining_private_dining, types.String
+    field :dining_dress_code, types.String
+    field :dining_price, types.String
+    field :dining_opening_hours_winter, types.String
+    field :dining_opening_hours_summer, types.String
+    field :dining_capacity, types.String
     field :photo, Types::PhotoType, "The primary photo of this page"
     field :slug, types.String do
         resolve ->(page, args, ctx) {
