@@ -36,6 +36,8 @@ gem 'awesome_nested_set', git: 'https://github.com/collectiveidea/awesome_nested
 gem "graphiql-rails", group: :development
 gem 'rack-cors'
 
+gem 'optics-agent'
+
 gem 'globalize', git: 'https://github.com/globalize/globalize'
 gem 'activemodel-serializers-xml'
 
