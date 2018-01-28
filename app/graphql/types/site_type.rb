@@ -6,12 +6,12 @@ Types::SiteType = GraphQL::ObjectType.define do
     global_id_field :id
     field :title, !types.String, "The title of the site"
     field :name, !types.String, "The name of the site"
-	connection :pages, Types::PageType.connection_type, "pages of this site" do
+	  field :pages, types[Types::PageType], "pages of this site" do
 		argument :order, types.String
 	  	resolve ->(site, args, ctx) {
-			site.pages.page(50).order(args[:order] || 'lft asc' )
-		}
-	end
+        site.pages.order(args[:order] || 'lft asc' ).limit(50)
+      }
+    end
     field :page, Types::PageType do
       description "The page"
 	 	argument :title, types.String

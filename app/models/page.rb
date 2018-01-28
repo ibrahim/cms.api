@@ -7,9 +7,10 @@ class Page < ActiveRecord::Base
 		end
 	end
 	has_many  :photos, :through => :frames
-	belongs_to :photo
+	has_many  :downloads, as: :downloadable
+	belongs_to :photo, optional: true
 	has_many  :taggings, as: :taggable, dependent: :destroy
-        has_many :tags , through: :taggings
+  has_many :tags , through: :taggings
 
 
         def to_slug

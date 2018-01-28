@@ -1,5 +1,5 @@
 class Feedback < ApplicationRecord
-    belongs_to :form
+    belongs_to :form, optional: true
   
     store :body, coder: JSON
     # validates_presence_of :name, :body, :form_id

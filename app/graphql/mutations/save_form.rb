@@ -1,28 +1,29 @@
 def verify_recapcha(gRecaptchaResponse, remote_ip)
-    require 'uri'
-    require 'net/http'
-    require 'json'
-    require 'openssl'
-    uri = URI("https://www.google.com/recaptcha/api/siteverify")
-    https = Net::HTTP.new(uri.host, uri.port)
-    https.use_ssl = true  if uri.port == 443
-    https.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    #https.ssl_options = OpenSSL::SSL::SSL_OP_NO_SSLv2 | OpenSSL::SSL::OP_NO_SSLv3 | OpenSSL::SSL::SSL_OP_NO_COMPRESSION
-    reqheaders = {}
-    reqheaders["secret"]    = "6LcDBhsUAAAAAPpP2azdFSb9DhMxsiH9T7HEiheo" #"6LeI0hoUAAAAAABzHMMPfvsBlmqUX0iBM-Dx00oo"
-    reqheaders["response"]  = gRecaptchaResponse #params["g-recaptcha-response"]
-    reqheaders["remoteip"]  = remote_ip
-    #verify_request["challenge"] = params[:recaptcha_challenge_field]
-    #verify_request["content-type"]  = "application/x-www-form-urlencoded"
-    req = Net::HTTP::Post.new(uri.path)
-    req["content-length"]  = reqheaders.to_s.length
-    req.set_form_data(reqheaders)
-    res = https.request(req)
-    return JSON.parse(res.body)["success"]
+  return false if gRecaptchaResponse.blank?
+  require 'uri'
+  require 'net/http'
+  require 'json'
+  require 'openssl'
+  uri = URI("https://www.google.com/recaptcha/api/siteverify")
+  https = Net::HTTP.new(uri.host, uri.port)
+  https.use_ssl = true  if uri.port == 443
+  https.verify_mode = OpenSSL::SSL::VERIFY_NONE
+  #https.ssl_options = OpenSSL::SSL::SSL_OP_NO_SSLv2 | OpenSSL::SSL::OP_NO_SSLv3 | OpenSSL::SSL::SSL_OP_NO_COMPRESSION
+  reqheaders = {}
+  reqheaders["secret"]    = "6LcDBhsUAAAAAPpP2azdFSb9DhMxsiH9T7HEiheo" #"6LeI0hoUAAAAAABzHMMPfvsBlmqUX0iBM-Dx00oo"
+  reqheaders["response"]  = gRecaptchaResponse #params["g-recaptcha-response"]
+  reqheaders["remoteip"]  = remote_ip
+  #verify_request["challenge"] = params[:recaptcha_challenge_field]
+  #verify_request["content-type"]  = "application/x-www-form-urlencoded"
+  req = Net::HTTP::Post.new(uri.path)
+  req["content-length"]  = reqheaders.to_s.length
+  req.set_form_data(reqheaders)
+  res = https.request(req)
+  return JSON.parse(res.body)["success"]
 
-    #raise params.to_yaml
-    #raise verify_request.to_yaml
-    #res = https.request(verify_request)
+  #raise params.to_yaml
+  #raise verify_request.to_yaml
+  #res = https.request(verify_request)
 end
 
 module Mutations
@@ -66,7 +67,7 @@ module Mutations
                         feedback: feedback,
                     }
                 else
-                    render :action => 'new'
+                  return { errors: "Unable to verfiy Recaptcha"} 
                 end
             else
                 return { errors: "Unable to verfiy Recaptcha"} 

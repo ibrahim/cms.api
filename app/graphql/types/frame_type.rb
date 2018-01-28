@@ -4,5 +4,10 @@ Types::FrameType = GraphQL::ObjectType.define do
     interfaces [GraphQL::Relay::Node.interface]
 
     global_id_field :id
-    field :photo, !Types::PhotoType, "The photo inside the frame"
+    #field :photo, !Types::PhotoType, "The photo inside the frame"
+    field :photo, Types::PhotoType do
+        resolve ->(frame, args, ctx) {
+            RecordLoader.for(Photo).load(frame.photo_id)
+        }
+    end
 end

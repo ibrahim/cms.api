@@ -1,4 +1,3 @@
-require 'mime/types'
 class Photo < ActiveRecord::Base
 
   	after_destroy :remove_files
@@ -17,8 +16,8 @@ class Photo < ActiveRecord::Base
 		["large",     LARGE], 
 		["gallery",   GALLERY] ]
 
-    belongs_to :page
-    belongs_to :photo, foreign_key: 'id'
+    belongs_to :page, optional: true
+    belongs_to :photo, foreign_key: 'id', optional: true
 
 
 	#{{{ proper_size
