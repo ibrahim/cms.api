@@ -8,10 +8,9 @@ class GraphqlController < ApplicationController
       # Query context goes here, for example:
       # current_user: current_user,
       current_site: current_site,
-      remote_ip: request.remote_ip,
-      optics_agent: request.env[:optics_agent].with_document(query)
+      remote_ip: request.remote_ip
     }
-    result = SunriseApiSchema.execute(query, variables: variables, context: context)
+    result = ApiSchema.execute(query, variables: variables, context: context)
     render json: result
   end
 

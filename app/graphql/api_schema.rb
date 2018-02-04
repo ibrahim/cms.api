@@ -1,4 +1,4 @@
-SunriseApiSchema = GraphQL::Schema.define do
+ApiSchema = GraphQL::Schema.define do
 
   tracer GraphQL::Tracing::ActiveSupportNotificationsTracing
     use GraphQL::Batch
@@ -44,14 +44,14 @@ SunriseApiSchema = GraphQL::Schema.define do
 end
 
 
-SunriseApiSchema.middleware << GraphQL::Schema::TimeoutMiddleware.new(max_seconds: 10) do |err, query|
+ApiSchema.middleware << GraphQL::Schema::TimeoutMiddleware.new(max_seconds: 10) do |err, query|
   Rails.logger.info("GraphQL Timeout: #{query.query_string}")
 end
 
 log_query_complexity = GraphQL::Analysis::QueryComplexity.new { |query, complexity| Rails.logger.info("[GraphQL Query Complexity] #{complexity}")}
-SunriseApiSchema.query_analyzers << log_query_complexity
+ApiSchema.query_analyzers << log_query_complexity
 
-SunriseApiSchema.query_analyzers << GraphQL::Analysis::FieldUsage.new { |query, used_fields, used_deprecated_fields|
+ApiSchema.query_analyzers << GraphQL::Analysis::FieldUsage.new { |query, used_fields, used_deprecated_fields|
   puts "Used GraphQL fields: #{used_fields.join(', ')}"
   puts "Used deprecated GraphQL fields: #{used_deprecated_fields.join(', ')}"
 }

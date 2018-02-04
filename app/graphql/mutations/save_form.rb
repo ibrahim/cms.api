@@ -10,7 +10,7 @@ def verify_recapcha(gRecaptchaResponse, remote_ip)
   https.verify_mode = OpenSSL::SSL::VERIFY_NONE
   #https.ssl_options = OpenSSL::SSL::SSL_OP_NO_SSLv2 | OpenSSL::SSL::OP_NO_SSLv3 | OpenSSL::SSL::SSL_OP_NO_COMPRESSION
   reqheaders = {}
-  reqheaders["secret"]    = "6LcDBhsUAAAAAPpP2azdFSb9DhMxsiH9T7HEiheo" #"6LeI0hoUAAAAAABzHMMPfvsBlmqUX0iBM-Dx00oo"
+  reqheaders["secret"]    = "6Ld350MUAAAAACQb8TRXT2Ik7hsyjOs-_SwuipZQ" #"6LeI0hoUAAAAAABzHMMPfvsBlmqUX0iBM-Dx00oo"
   reqheaders["response"]  = gRecaptchaResponse #params["g-recaptcha-response"]
   reqheaders["remoteip"]  = remote_ip
   #verify_request["challenge"] = params[:recaptcha_challenge_field]
