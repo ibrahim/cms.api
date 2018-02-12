@@ -1,3 +1,3 @@
-optics_agent = OpticsAgent::Agent.new
-optics_agent.configure { schema SunriseApiSchema  }
-Rails.application.config.middleware.use optics_agent.rack_middleware
+# optics_agent = OpticsAgent::Agent.new
+# optics_agent.configure { schema SunriseApiSchema  }
+# Rails.application.config.middleware.use optics_agent.rack_middleware

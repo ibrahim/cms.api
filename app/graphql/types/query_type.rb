@@ -5,10 +5,12 @@ Types::QueryType = GraphQL::ObjectType.define do
 
   field :site, Types::SiteType do
     description "Site object"
-    argument :name, !types.String
+    argument :domain, !types.String
     resolve ->(obj, args, ctx) {
-        site = Site.where(name: args[:name]).first
-        site
+      domain = Domain.where(name: args[:domain])
+      site = domain.first.site unless domain.blank?
+      # site = Site.where(name: args[:name]).first
+      site
     }
   end
 end

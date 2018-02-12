@@ -6,10 +6,21 @@ Types::PageType = GraphQL::ObjectType.define do
     field :db_id, types.Int, "The db id of this page", property: :id
     field :parent_id, types.Int, "The parent_id of this page", property: :parent_id
     field :url, types.String, "The url of this page"
+    field :lft, types.Int, "The lft of this page"
     field :short, types.String, "The short title of this page"
     field :photo, Types::PhotoType do
         resolve ->(page, args, ctx) {
             RecordLoader.for(Photo).load(page.photo_id)
+        }
+    end
+    field :leaf, types.Boolean do
+        resolve ->(page, args, ctx) {
+            page.leaf?
+        }
+    end
+    field :root, types.Boolean do
+        resolve ->(page, args, ctx) {
+            page.root?
         }
     end
     field :slug, types.String do
@@ -47,12 +58,21 @@ Types::PageType = GraphQL::ObjectType.define do
     field :frames, types[Types::FrameType] do
             argument :order, types.String
             argument :limit, types.Int
-            preload :frames
+            preload  :frames
             resolve ->(page, args, ctx) {
                 # frames = page.frames.order(args[:order] || "lft desc").includes(:photo)
                 # frames = frames.limit(args[:limit]) if args[:limit] > 0
                 # return frames
                 page.frames
+            }
+    end
+    field :parts, types[Types::PartType] do
+            preload :parts
+            resolve ->(page, args, ctx) {
+                # frames = page.frames.order(args[:order] || "lft desc").includes(:photo)
+                # frames = frames.limit(args[:limit]) if args[:limit] > 0
+                # return frames
+                page.parts
             }
     end
     field :downloads, types[Types::DownloadType] do
@@ -101,6 +121,14 @@ Types::PageType = GraphQL::ObjectType.define do
         descendants.all
       }
     end
+    
+    field :breadcrumb , types[Types::PageType], "Breadcrumb" do
+      resolve ->(page, args, ctx) {
+        breadcrumb = page.self_and_ancestors
+        breadcrumb.all
+      }
+    end
+
     field :page, Types::PageType do
         argument :slug, types.String
         resolve ->(page, args, ctx) {

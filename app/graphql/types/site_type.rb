@@ -8,8 +8,16 @@ Types::SiteType = GraphQL::ObjectType.define do
   field :name, !types.String, "The name of the site"
   field :pages, types[Types::PageType], "pages of this site" do
     argument :order, types.String
+    argument :id, types.String
+    argument :slug, types.String
     resolve ->(site, args, ctx) {
-      site.pages.order(args[:order] || 'lft asc' ).limit(50)
+      pages = site.pages
+      pages = pages.limit(50)
+      parent = site.pages.where(slug: args[:slug]) unless args[:slug].blank?
+      parent = site.pages.where(id: args[:id]) unless args[:id].blank?
+      pages = parent.blank? ? pages.roots : pages.where(parent_id: parent.first.id)
+      pages = pages.order(args[:order] || 'lft asc' )
+      pages
     }
   end
   field :page, Types::PageType do

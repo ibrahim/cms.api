@@ -1,13 +1,17 @@
 class ApplicationController < ActionController::API
-  #protect_from_forgery with: :exception
+    before_action :set_locale
+    #protect_from_forgery with: :exception
 
-    before_action :get_domain
-    helper_method :current_site
+    #before_action :get_domain
+    #helper_method :current_site
 
     def current_site
-      @site
+      @site = Site.first
     end
 
+    def set_locale
+      I18n.locale = params[:locale] || I18n.default_locale
+    end
 
     def get_domain
       request_host = request.host
