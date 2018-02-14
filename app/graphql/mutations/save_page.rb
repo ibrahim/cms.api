@@ -35,7 +35,9 @@ module Mutations
             page.body = inputs[:body] if inputs[:body].present?
             page.title = inputs[:title] if inputs[:title].present?
             page.part = inputs[:part]if inputs[:part].present?
+            parent = current_site.pages.where(id: inputs[:parent_id]).first
             if page.save
+              page.move_to_child_of(parent) if parent.present?
               return { 
                 page: page,
               }

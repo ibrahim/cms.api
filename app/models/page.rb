@@ -28,7 +28,7 @@ class Page < ActiveRecord::Base
     errors.add(:part, "Cannot add part to unsaved page") and return if self.new_record?
     part = Part.where(page_id: self.id, locale: I18n.locale).first
     part = Part.new(page: self, structure: structure, locale: I18n.locale) if part.blank?
-    part.content = content.to_s
+    part.content = content.to_json
     part.save!
   rescue JSON::ParserError => e
     errors.add(:part, "Part content json parse error")
