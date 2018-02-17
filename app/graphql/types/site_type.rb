@@ -32,6 +32,10 @@ Types::SiteType = GraphQL::ObjectType.define do
       #page.preload(:photos, :photo, :translations)
       page.first
     }
-
+  end
+  field :structures, types[Types::StructureType], "structures of this site" do
+    resolve ->(site, args, ctx) {
+      site.structures
+    }
   end
 end

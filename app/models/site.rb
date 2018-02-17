@@ -2,6 +2,7 @@ class Site < ActiveRecord::Base
 	has_many :pages
   has_many :domains
 
+  has_many :structures
   validates :name, uniqueness: true
   
 
