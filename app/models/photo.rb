@@ -1,6 +1,9 @@
+require "base64"
+
 class Photo < ActiveRecord::Base
 
   	after_destroy :remove_files
+    belongs_to :site
 
 	SQUARE    = 80
 	THUMBNAIL = 120
@@ -57,7 +60,6 @@ class Photo < ActiveRecord::Base
 	#{{{ savegeometry
 	def savegeometry
 		idn = `identify -ping #{photo_file}`
-		#raise identify.to_s
 		#this_size = idn.gsub(photo_file,'').chomp.strip.split(' ')[1]
 		atts = idn.gsub(photo_file,'').chomp.strip.split(' ')
     this_size = atts[1]
@@ -76,8 +78,8 @@ class Photo < ActiveRecord::Base
 		return "#{sprintf('%04d', (self.id/1000).ceil) }"
 	end
 	#}}}
-	#{{{ save_uploaded_file
-	def save_uploaded_file(bin_data)
+	#{{{ save_uploaded_file_binary
+	def save_uploaded_file_binary(bin_data)
 		unless bin_data.nil?
 			save! if new_record?
 			FileUtils.makedirs(photo_folder)
@@ -91,13 +93,31 @@ class Photo < ActiveRecord::Base
 		end
 	end
 	#}}}
+	#{{{ save_uploaded_file
+	def save_uploaded_file(base64_data)
+		unless base64_data.nil?
+			save! if new_record?
+      rgx = /\Adata:([-\w]+\/[-\w\+\.]+)?;base64,(.*)/m
+      data_uri_parts = base64_data.match(rgx) || []
+      ext = MIME::Types[data_uri_parts[1]].first.preferred_extension
+      bin_data = Base64.decode64(data_uri_parts[2]) 
+			FileUtils.makedirs(photo_folder)
+      handle = File.open(photo_folder + "/#{photo.id}.#{extension}","wb")
+			handle.binmode
+			handle.write bin_data
+			handle.close
+			savegeometry
+			update_thumbnails
+      return 
+		end
+	end
+	#}}}
 	#{{{ update_thumbnails
 	def update_thumbnails
-    return if skip_thumbnails_creation
     return if new_record?
 		srand Time.now.to_i
 		degrees = (-9..9).map{ |n| [n] }
-    quality = "90"
+    quality = "85"
 		`convert #{ photo_file } -resize "#{GALLERY}>" -quality #{quality}  #{ photo_file('gallery') }`
 		`convert #{ photo_file(:gallery) } -resize "#{LARGE}>"  -quality #{quality} #{ photo_file('large') } `
 		`convert #{ photo_file(:large) } -resize "#{MEDIUM}>" -quality #{quality}  #{ photo_file('medium')} `
@@ -163,15 +183,9 @@ class Photo < ActiveRecord::Base
 	end
 	#}}}
 	#{{{ file=
-	def file=(picture_field)
-		return if picture_field.blank?
-		#if picture_field.original_filename =~ /.*\.(jpg|gif|png)/i	
-			#self.mime = picture_field.content_type.chomp #it will be overriden by identify in savegeometry
-			#bin_data = picture_field.read 
-			#save_uploaded_file(bin_data)
-		#end 
-    self.title = picture_field.original_filename if title.blank? 
-		save_uploaded_file(picture_field.read)
+	def file=(base64_data)
+		return if base64_data.blank?
+		save_uploaded_file(base64_data)
 	end
 	#}}}
 

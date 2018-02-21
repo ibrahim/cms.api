@@ -1,6 +1,7 @@
 class Page < ActiveRecord::Base
 	translates :title, :body, :blurb
   acts_as_nested_set  :scope => [:site_id]
+  has_and_belongs_to_many :structures
   
   has_many  :frames, :dependent => :destroy do
 		def photo_frame

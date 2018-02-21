@@ -40,8 +40,9 @@ gem 'mysql2'
 # gem 'activerecord-jdbcmysql-adapter', git: "https://github.com/jruby/activerecord-jdbc-adapter/", tag: "v51.0", :platform => :jruby
 gem 'awesome_nested_set', git: 'https://github.com/collectiveidea/awesome_nested_set.git'
 # gem "graphiql-rails", group: :development
-gem 'rack-cors'
+gem 'rack-cors', :require => 'rack/cors'
 
+gem 'mime-types', require: 'mime/types'
 #gem 'optics-agent'
 
 gem 'globalize', git: 'https://github.com/globalize/globalize'

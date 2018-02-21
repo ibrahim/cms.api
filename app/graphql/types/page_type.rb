@@ -7,6 +7,7 @@ Types::PageType = GraphQL::ObjectType.define do
     field :parent_id, types.Int, "The parent_id of this page", property: :parent_id
     field :url, types.String, "The url of this page"
     field :lft, types.Int, "The lft of this page"
+    field :rgt, types.Int, "The rgt of this page"
     field :short, types.String, "The short title of this page"
     field :photo, Types::PhotoType do
         resolve ->(page, args, ctx) {
@@ -133,6 +134,12 @@ Types::PageType = GraphQL::ObjectType.define do
         argument :slug, types.String
         resolve ->(page, args, ctx) {
             page.children.where(slug: args[:slug]).first
+        }
+    end
+    field :children_count, types.Int do
+        resolve ->(page, args, ctx) {
+          c = ( page.rgt - page.lft ) / 2
+          return c > 1 ? c : 0
         }
     end
 end
