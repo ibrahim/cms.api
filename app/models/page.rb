@@ -31,10 +31,10 @@ class Page < ActiveRecord::Base
     part = Part.new(page: self, structure: structure, locale: I18n.locale) if part.blank?
     part.content = content.to_json
     part.save!
-  rescue JSON::ParserError => e
-    errors.add(:part, "Part content json parse error")
-  rescue ActiveRecord::RecordInvalid => invalid
-    error.add(:part, "Part is not valid #{invalid.errors}")
+  # rescue JSON::ParserError => e
+  #   errors.add(:part, "Part content json parse error")
+  # rescue ActiveRecord::RecordInvalid => invalid
+  #   error.add(:part, "Part is not valid #{invalid.errors}")
   end
 
 

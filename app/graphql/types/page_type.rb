@@ -76,7 +76,7 @@ Types::PageType = GraphQL::ObjectType.define do
                 page.parts
             }
     end
-    field :downloads, types[Types::DownloadType] do
+    field :files, types[Types::FileType] do
             argument :order, types.String
             argument :limit, types.Int
             preload :downloads

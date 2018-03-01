@@ -38,4 +38,10 @@ Types::SiteType = GraphQL::ObjectType.define do
       site.structures
     }
   end
+  field :structure, Types::StructureType, "structure of this site" do
+    argument :id, types.String
+    resolve ->(site, args, ctx) {
+      site.structures.where(args[:id]).first
+    }
+  end
 end
