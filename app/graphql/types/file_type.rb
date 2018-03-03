@@ -13,4 +13,9 @@ Types::FileType = GraphQL::ObjectType.define do
             download.uri
         }
     end
+    field :short_url, types.String do
+        resolve ->(download, args, ctx) {
+          download.short_url
+        }
+    end
 end

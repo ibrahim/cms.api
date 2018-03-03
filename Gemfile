@@ -32,7 +32,6 @@ gem 'jbuilder', '~> 2.5'
 # gem 'bcrypt', '~> 3.1.7'
 
 gem 'i18n', '~> 0.9.3'
-
 gem 'graphql'
 gem 'graphql-batch'
 gem 'graphql-preload'
@@ -47,6 +46,9 @@ gem 'mime-types', require: 'mime/types'
 
 gem 'globalize', git: 'https://github.com/globalize/globalize'
 gem 'activemodel-serializers-xml'
+
+gem "google_url_shortener", :require => 'google_url_shortener'
+gem 'dotenv-rails', :groups => [:development, :test]
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

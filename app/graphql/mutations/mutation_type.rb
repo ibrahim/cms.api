@@ -8,6 +8,8 @@ module Mutations
     field :deletePart,    field: DeletePart.field
     field :pasteClips,    field: PasteClips.field
     field :attachPhoto,   field: AttachPhoto.field
-    field :attachFile,   field: AttachFile.field
+    field :attachFile,    field: AttachFile.field
+    field :deleteFile,    field: DeleteFile.field
+    field :shortenUrl,    field: ShortenUrl.field
   end
 end

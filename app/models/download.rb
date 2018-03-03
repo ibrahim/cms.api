@@ -91,4 +91,8 @@ class Download < ApplicationRecord
   def escaped_name
     URI.escape(name)
   end
+
+  def full_url
+     "#{site.try(:domain).try(:name)}#{uri}"
+  end
 end
