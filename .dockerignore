@@ -1,5 +1,7 @@
 .git
 .dockerignore
+.env
+Gemfile.lock
 public/photos
 public/files
-Gemfile.lock
+db/schema.rb

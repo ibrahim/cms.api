@@ -6,11 +6,12 @@
 
 # Ignore bundler config.
 /.bundle
-
+public/files
+public/photos
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal
-
+Gemfile.lock
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
