@@ -24,7 +24,7 @@ module Mutations
           download = page.downloads.find(inputs[:file_id])
           return { errors: "PAGE DOWNLOAD FILE NOT FOUND"} if download.blank?
 
-          short_url = Google::UrlShortener.shorten!("http://www.jperiod.travel" )
+          short_url = Google::UrlShortener.shorten!(download.full_url)
           if download.update_attribute(:short_url, short_url)
              return { 
                page: page,

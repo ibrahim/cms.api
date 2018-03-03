@@ -3,6 +3,8 @@ class Download < ApplicationRecord
   belongs_to :site
   ICONS = %w(pdf doc docx xls zip avi htm js css ppt xml xls sql php jpg tif mp3 mov txt swf ra psd gif png flv pps rm pptx)
   
+  after_destroy :remove_file
+
   def self.extension_code_of(i)
     ICONS.rindex(i)
   end
@@ -94,5 +96,11 @@ class Download < ApplicationRecord
 
   def full_url
      "#{site.try(:domain).try(:name)}#{uri}"
+  end
+
+  def remove_file
+    if File.exist?(file_folder(true))
+      FileUtils.rm_rf(file_folder(true))
+    end
   end
 end
