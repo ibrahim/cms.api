@@ -40,7 +40,7 @@ gem 'mysql2'
 gem 'awesome_nested_set', git: 'https://github.com/collectiveidea/awesome_nested_set.git'
 # gem "graphiql-rails", group: :development
 gem 'rack-cors', :require => 'rack/cors'
-
+gem 'sendgrid-ruby'
 gem 'mime-types', require: 'mime/types'
 #gem 'optics-agent'
 

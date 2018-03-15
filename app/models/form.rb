@@ -1,6 +1,6 @@
 class Form < ApplicationRecord
   validates_presence_of :fields, :title
-  serialize :fields
+  # serialize :fields
 
   has_many :feedbacks
 

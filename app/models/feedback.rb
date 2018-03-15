@@ -1,6 +1,7 @@
 class Feedback < ApplicationRecord
     belongs_to :form, optional: true
-  
+    belongs_to :site, optional: true
+
     store :body, coder: JSON
     # validates_presence_of :name, :body, :form_id
     # named_scope :unread, :conditions => ['feedbacks.read is null']
