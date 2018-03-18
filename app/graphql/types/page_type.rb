@@ -69,11 +69,15 @@ Types::PageType = GraphQL::ObjectType.define do
     end
     field :parts, types[Types::PartType] do
             preload :parts
+            argument :structure, types.String
             resolve ->(page, args, ctx) {
                 # frames = page.frames.order(args[:order] || "lft desc").includes(:photo)
                 # frames = frames.limit(args[:limit]) if args[:limit] > 0
                 # return frames
-                page.parts
+                #structure = Structure.where(name: args[:structure]).first if args[:structure].present?
+                #parts = parts.where({structure_id: structure.id}) if structure
+                #parts.all
+                parts = page.parts
             }
     end
     field :files, types[Types::FileType] do
@@ -102,7 +106,7 @@ Types::PageType = GraphQL::ObjectType.define do
             argument :title, types.String
             argument :order, types.String
             # preload [{ children: [ { frames: :photo } , :photo, :translations] }]
-            preload :children
+            preload [{ children: [:translations, :parts] }]
             resolve ->(page, args, ctx) {
                 # children = page.children
                 # # children = children.where(title: args[:title]) unless args[:title].blank?
