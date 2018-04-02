@@ -13,6 +13,7 @@ module Mutations
     field :shortenUrl,    field: ShortenUrl.field
     field :deleteFrame,   field: DeleteFrame.field
     field :saveFrame,     field: SaveFrame.field
+    field :saveFrames,    field: SaveFrames.field
     field :primaryPhoto,  field: PrimaryPhoto.field
   end
 end

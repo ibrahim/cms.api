@@ -1,9 +1,9 @@
 module Mutations
-    PrimaryPhoto = GraphQL::Relay::Mutation.define do
-        name "PrimaryPhoto"
+    SaveFrames = GraphQL::Relay::Mutation.define do
+        name "SaveFrames"
 
         input_field :page_id, types.String
-        input_field :frame_id, types.String
+        input_field :frames, types[types.Int]
         input_field :domain, types.String
 
         return_field :page, Types::PageType
@@ -19,17 +19,14 @@ module Mutations
           page = site.pages.find(inputs[:page_id])
           return { errors: "PAGE NOT FOUND"} if page.blank?
           
-          frame = page.frames.find(inputs[:frame_id])
-          return { errors: "PAGE PHOTO ATTACHEMENT NOT FOUND"} if frame.blank?
-          
-          page.photo_id = frame.photo_id
-           if page.save
-             return { 
-               page: page,
-             }
-           else
-             return { errors: "Unable to make primary photo #{frame.errors.to_yaml}"} 
-           end
+          frames = inputs[:frames]
+          frames.each_with_index do |frame_id, idx|
+            Frame.connection.execute("Update frames set lft=%d, rgt=%d where page_id=%d and id=%s" % [ (idx * 2) + 1, (idx * 2) + 2, page.id, frame_id])
+          end
+
+          return { 
+            page: page,
+          }
         end
     end
 end

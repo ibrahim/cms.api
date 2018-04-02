@@ -65,7 +65,7 @@ Types::PageType = GraphQL::ObjectType.define do
                 # frames = page.frames.order(args[:order] || "lft desc").includes(:photo)
                 # frames = frames.limit(args[:limit]) if args[:limit] > 0
                 # return frames
-                page.frames
+                page.frames.sort{|a,b| a.lft <=> b.lft}
             }
     end
     field :parts, types[Types::PartType] do
