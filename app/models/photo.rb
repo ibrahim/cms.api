@@ -2,8 +2,10 @@ require "base64"
 
 class Photo < ActiveRecord::Base
 
-  	after_destroy :remove_files
-    belongs_to :site
+  after_destroy :remove_files
+  belongs_to :site
+
+  
 
 	SQUARE    = 80
 	THUMBNAIL = 120

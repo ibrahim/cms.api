@@ -11,5 +11,8 @@ module Mutations
     field :attachFile,    field: AttachFile.field
     field :deleteFile,    field: DeleteFile.field
     field :shortenUrl,    field: ShortenUrl.field
+    field :deleteFrame,   field: DeleteFrame.field
+    field :saveFrame,     field: SaveFrame.field
+    field :primaryPhoto,  field: PrimaryPhoto.field
   end
 end

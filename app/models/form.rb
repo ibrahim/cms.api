@@ -2,6 +2,7 @@ class Form < ApplicationRecord
   validates_presence_of :fields, :title
   # serialize :fields
 
+  belongs_to :site
   has_many :feedbacks
 
   def rows

@@ -86,7 +86,7 @@ module Mutations
             if verify_recapcha(inputs[:gRecaptchaResponse], remote_ip)
                 if feedback.save
                   # FeedbackMailer.feedback_mail(feedback, current_site).deliver_now
-                  form_notifier(feedback)
+                  # form_notifier(feedback)
                   return { 
                     form: form,
                     feedback: feedback,

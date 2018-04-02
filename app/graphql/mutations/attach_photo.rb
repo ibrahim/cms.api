@@ -5,6 +5,7 @@ module Mutations
         input_field :page_id, types.String
         input_field :file, types.String
         input_field :name, types.String
+        input_field :tags, types.String
         input_field :domain, types.String
 
         return_field :photo, Types::PhotoType
@@ -27,7 +28,7 @@ module Mutations
           photo.title = inputs[:name]
           photo.file = inputs[:file]
            if photo.save
-             Frame.create(page: page, photo: photo)
+             Frame.create(page: page, photo: photo, tags: inputs[:tags])
              return { 
                page: page,
                photo: photo,

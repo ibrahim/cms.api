@@ -5,6 +5,7 @@ Types::PageType = GraphQL::ObjectType.define do
     global_id_field :id
     field :db_id, types.Int, "The db id of this page", property: :id
     field :parent_id, types.Int, "The parent_id of this page", property: :parent_id
+    field :photo_id, types.Int, "Primary Photo ID", property: :photo_id
     field :url, types.String, "The url of this page"
     field :lft, types.Int, "The lft of this page"
     field :rgt, types.Int, "The rgt of this page"
