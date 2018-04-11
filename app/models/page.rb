@@ -10,6 +10,7 @@ class Page < ActiveRecord::Base
 	end
 
   scope :roots, -> { where(parent_id: nil) }
+  scope :published, -> { where(published: 1) }
 	
 	belongs_to :photo, optional: true
 	belongs_to :site

@@ -106,6 +106,7 @@ Types::PageType = GraphQL::ObjectType.define do
     field :children, types[Types::PageType] do
             argument :slug, types.String
             argument :title, types.String
+            argument :published, types.Int
             argument :order, types.String
             # preload [{ children: [ { frames: :photo } , :photo, :translations] }]
             preload [{ children: [:translations, :parts] }]
@@ -114,7 +115,9 @@ Types::PageType = GraphQL::ObjectType.define do
                 # # children = children.where(title: args[:title]) unless args[:title].blank?
                 #children = children.reorder('').order(args[:order] || "pages.lft desc") if args[:order]
                 # children = children.includes([ { frames: :photo } , :photo, :translations]) if args[:slug].blank? && args[:title].blank?
-                page.children
+              children = page.children
+              children = children.published if args[:published] == 1
+              return children
             }
     end
     field :descendants, types[Types::PageType] do

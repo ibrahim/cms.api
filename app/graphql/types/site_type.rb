@@ -24,11 +24,13 @@ Types::SiteType = GraphQL::ObjectType.define do
     description "The page"
     argument :title, types.String
     argument :slug, types.String
+    argument :published, types.Int
     argument :id, types.String
     resolve ->(site, args, ctx) {
       page = site.pages.where(slug: args[:slug] ) unless args[:slug].blank?
       page = site.pages.where(id: args[:id] ) unless args[:id].blank?
       page = site.pages.where(title: args[:title] ) unless args[:title].blank?
+      
       #page.preload(:photos, :photo, :translations)
       page.first
     }
