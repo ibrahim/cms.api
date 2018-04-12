@@ -7,6 +7,7 @@ module Mutations
         input_field :parent_id, types.String
         input_field :title, types.String
         input_field :slug, types.String
+        input_field :blurb, types.String
         input_field :published, types.Int
         input_field :body, types.String
         input_field :part, types.String
@@ -36,6 +37,7 @@ module Mutations
             page.body = inputs[:body] if inputs[:body].present?
             page.title = inputs[:title] if inputs[:title].present?
             page.slug = inputs[:slug] if inputs[:slug].present?
+            page.blurb = inputs[:blurb] if inputs[:blurb].present?
             page.published = inputs[:published].to_i == 1 ? 1 : 0
             page.part = inputs[:part]if inputs[:part].present?
             parent = current_site.pages.where(id: inputs[:parent_id]).first
