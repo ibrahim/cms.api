@@ -5,6 +5,7 @@ class Site < ActiveRecord::Base
   has_one :domain, ->{ where(primary: 1) }
 
   has_many :structures
+  has_many :forms
   validates :name, uniqueness: true
   
 

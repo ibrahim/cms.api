@@ -20,6 +20,13 @@ Types::SiteType = GraphQL::ObjectType.define do
       pages
     }
   end
+  field :forms, types[Types::FormType], "forms of this site" do
+    resolve ->(site, args, ctx) {
+      forms = site.forms
+      forms = forms.limit(50)
+      forms
+    }
+  end
   field :page, Types::PageType do
     description "The page"
     argument :title, types.String
@@ -38,6 +45,12 @@ Types::SiteType = GraphQL::ObjectType.define do
   field :structures, types[Types::StructureType], "structures of this site" do
     resolve ->(site, args, ctx) {
       site.structures
+    }
+  end
+  field :form, Types::FormType, "one form of this site" do
+    argument :slug, types.String
+    resolve ->(site, args, ctx) {
+      site.forms.where(slug: args[:slug]).first
     }
   end
   field :structure, Types::StructureType, "structure of this site" do

@@ -49,7 +49,7 @@ gem 'activemodel-serializers-xml'
 
 gem "google_url_shortener", :require => 'google_url_shortener'
 gem 'dotenv-rails', :groups => [:development, :test]
-
+gem 'will_paginate'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
