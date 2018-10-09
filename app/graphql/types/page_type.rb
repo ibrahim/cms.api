@@ -71,7 +71,7 @@ Types::PageType = GraphQL::ObjectType.define do
     end
     field :parts, types[Types::PartType] do
             preload :parts
-            argument :structure, types.String
+            argument :structure, types.Int
             resolve ->(page, args, ctx) {
                 # frames = page.frames.order(args[:order] || "lft desc").includes(:photo)
                 # frames = frames.limit(args[:limit]) if args[:limit] > 0
