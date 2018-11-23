@@ -1,24 +1,13 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A content Management System. Built using Ruby On Rails. This is only the backend. An API only Rails application.
 
-Things you may want to cover:
+## Features
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Unlimited pages hierarchy.
+* Photo Attachments
+* Files Attachments
+* Custom form builder
+* Form builder support multiple field types.
+* Form builder support for nested forms
+* Goo.gl shortner to provide public links for attached files.
