@@ -2,6 +2,8 @@
 
 A content Management System. Built using Ruby On Rails. This is only the backend. An API only Rails application.
 
+![](cms.gif)
+
 ## Features
 
 * Unlimited pages hierarchy.
